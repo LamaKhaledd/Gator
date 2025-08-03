@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"gator/internal/app"
 )
@@ -11,10 +13,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
 	}
-
-	if err := app.SetAndSaveUser(&cfg, "Lama"); err != nil {
-		log.Fatalf("Failed to set user: %v", err)
+	
+	if err := app.RunCommand(&cfg, os.Args[1:]); err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
 	}
-
-	app.PrintConfig(cfg)
 }
